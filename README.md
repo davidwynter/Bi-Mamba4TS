@@ -75,6 +75,6 @@ requirements and data characteristics, further customization might be necessary,
 handle edge cases where the sequence length is not a perfect multiple of the patch size.
 
 # TODO 
-    Initialize the model and prepare the dataset.
-    Implement the training loop using the loss function (MSE) and an optimizer (like Adam).
-    Evaluate the model on your validation/test dataset.
+Initialize the model and prepare the dataset.
+Implement the training loop using the loss function (MSE) and an optimizer (like Adam).
+Evaluate the model on your validation/test dataset.
