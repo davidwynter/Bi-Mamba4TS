@@ -1,6 +1,8 @@
 # Bi-Mamba4TS
 A python implementation of the 2404.15772v1.pdf paper on arxiv.org
 
+1st draft, untested
+
 Based on the paper, there are 4 components:
 
     SRA Decider: Decides the tokenization strategy based on Pearson correlation coefficients.
