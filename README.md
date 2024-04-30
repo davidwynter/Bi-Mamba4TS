@@ -18,26 +18,27 @@ based on a threshold λλ which you set (defaulting to 0.6 in the skeleton).
 
 ### SRA Decider Logic:
 
-The SRA_Decider module should:
+The SRA_Decider module:
 
-Calculate the Pearson correlation coefficients between each pair of series.
+Calculates the Pearson correlation coefficients between each pair of series.
 Use a threshold λλ to determine the degree of correlation that justifies switching from a
 channel-independent strategy to a channel-mixing strategy.
 
 #### Explanation:
 
-Normalization: For each series in the batch, the data is normalized by subtracting the mean and 
+- Normalization: For each series in the batch, the data is normalized by subtracting the mean and 
 dividing by the standard deviation.
-Correlation Calculation: The Pearson correlation coefficients are calculated using the formula 
-Correlation(X,Y)=∑(X−X‾)(Y−Y‾)∑(X−X‾)2∑(Y−Y‾)2Correlation(X,Y)=∑(X−X)2∑(Y−Y)2
+- Correlation Calculation: The Pearson correlation coefficients are calculated using the formula
+  
+```Correlation(X,Y)=∑(X−X‾)(Y−Y‾)∑(X−X‾)2∑(Y−Y‾)2Correlation(X,Y)=∑(X−X)2∑(Y−Y)2​∑(X−X)(Y−Y)```
 
-​∑(X−X)(Y−Y)​, which simplifies to a matrix multiplication of normalized series when each series is normalized.
-Decision Making: The decision to use channel-mixing or channel-independent tokenization is based on whether 
+​which simplifies to a matrix multiplication of normalized series when each series is normalized.
+- Decision Making: The decision to use channel-mixing or channel-independent tokenization is based on whether 
 the maximum correlation coefficient in the matrix (excluding self-correlations) exceeds the threshold λλ.
 
 #### Integration:
 
-This function should be integrated into your training loop where you pass the current batch of your multivariate 
+This function integrates into the training loop where you pass the current batch of your multivariate 
 time series data through this decider to choose the appropriate tokenization strategy dynamically based on the 
 data's inter-series relationships. Adjustments may be needed depending on the exact shape and nature of your 
 data inputs.
@@ -49,24 +50,24 @@ This transformation allows the model to focus on local sub-sequences or "patches
 This can be critical for capturing local temporal patterns more effectively.
 Patch Tokenization:
 
-Objective: Divide each univariate series into non-overlapping patches.
-Input Shape: Typically, the input to the PatchTokenizer would be of shape [batch_size, num_series, sequence_length].
-Output Shape: After patch tokenization, the output should be [batch_size, num_series, num_patches, patch_size], 
+- Objective: Divide each univariate series into non-overlapping patches.
+- Input Shape: Typically, the input to the PatchTokenizer would be of shape [batch_size, num_series, sequence_length].
+- Output Shape: After patch tokenization, the output should be [batch_size, num_series, num_patches, patch_size], 
 where num_patches is the number of patches that can be created from sequence_length.
 
 ### Explanation:
 
-Input Shape and Patch Calculation: The function starts by extracting the dimensions of the input tensor and 
+- Input Shape and Patch Calculation: The function starts by extracting the dimensions of the input tensor and 
 then computes how many full patches can be extracted from each time series.
-Validation: It checks if the sequence_length is perfectly divisible by patch_size. If not, it raises a ValueError. 
+- Validation: It checks if the sequence_length is perfectly divisible by patch_size. If not, it raises a ValueError. 
 This is crucial to ensure that each patch has the same size, which is important for consistent processing by 
 subsequent model components.
-Reshaping for Patches: The tensor is reshaped to group elements into patches. The view method is used to reshape 
+- Reshaping for Patches: The tensor is reshaped to group elements into patches. The view method is used to reshape 
 the tensor without copying the data, but it requires that the number of elements remains constant.
 
 ### Integration and Usage:
 
-Integrate this component in your model's forward function where it will preprocess the multivariate time series data 
+This component is integrated in the model's forward function where it will preprocess the multivariate time series data 
 before passing it to the encoder or other components. Make sure that your data dimensions are correctly managed, and 
 the sequence_length is indeed divisible by patch_size for every batch of data.
 
