@@ -30,7 +30,8 @@ channel-independent strategy to a channel-mixing strategy.
 dividing by the standard deviation.
 - Correlation Calculation: The Pearson correlation coefficients are calculated using the formula
   
-```Correlation(X,Y)=∑(X−X‾)(Y−Y‾)∑(X−X‾)2∑(Y−Y‾)2Correlation(X,Y)=∑(X−X)2∑(Y−Y)2​∑(X−X)(Y−Y)```
+```Correlation(X,Y)=∑(X−X‾)(Y−Y‾)∑(X−X‾)^2∑(Y−Y‾)^2```
+```Correlation(X,Y)=∑(X−X)^2∑(Y−Y)^2​∑(X−X)(Y−Y)```
 
 ​which simplifies to a matrix multiplication of normalized series when each series is normalized.
 - Decision Making: The decision to use channel-mixing or channel-independent tokenization is based on whether 
