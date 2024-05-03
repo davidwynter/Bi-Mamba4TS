@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class SRA_Decider(nn.Module):
     def __init__(self, num_series, threshold=0.6):
         super().__init__()
@@ -30,9 +31,11 @@ class SRA_Decider(nn.Module):
         
         return torch.tensor(results, dtype=torch.int64, device=x.device)
 
+
 class TokenizationStrategy:
     CHANNEL_INDEPENDENT = 'channel_independent'
     CHANNEL_MIXING = 'channel_mixing'
+
 
 class PatchTokenizer(nn.Module):
     def __init__(self, patch_size):
@@ -55,6 +58,7 @@ class PatchTokenizer(nn.Module):
             return x_patched.permute(0, 2, 1, 3)
         return x_patched
 
+
 class MambaBlock(nn.Module):
     def __init__(self, in_features, out_features):
         super().__init__()
@@ -67,6 +71,7 @@ class MambaBlock(nn.Module):
         x = F.silu(self.conv1d(x))
         return self.linear2(x)
 
+
 class BiMambaEncoder(nn.Module):
     def __init__(self, in_features, out_features):
         super().__init__()
@@ -78,6 +83,7 @@ class BiMambaEncoder(nn.Module):
         backward_input = torch.flip(x, dims=[1])  # Flip on time dimension
         backward_output = self.backward_block(backward_input)
         return forward_output + backward_output
+
 
 class BiMamba4TS(nn.Module):
     def __init__(self):
@@ -125,7 +131,8 @@ def main():
     # Print the output
     print("Output from BiMamba4TS Model:", output)
 
+
 if __name__ == "__main__":
     main()
 
-model = BiMamba4TS()
+
