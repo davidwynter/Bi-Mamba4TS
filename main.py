@@ -13,13 +13,15 @@ impl SRA_Decider {
         SRA_Decider { threshold }
     }
 
-    /// Calculate correlations and decide the tokenization strategy based on counts and their ratio.
-    /// 
-    /// # Arguments
-    /// * `x` - A 2D array where each row is a time series and each column is a time point.
-    ///
-    /// # Returns
-    /// * Returns 1 for channel-mixing strategy, or 0 for channel-independent strategy.
+    ''' 
+     Calculate correlations and decide the tokenization strategy based on counts and their ratio.
+     
+     Arguments
+     * `x` - A 2D array where each row is a time series and each column is a time point.
+    
+     Returns
+     * Returns 1 for channel-mixing strategy, or 0 for channel-independent strategy.
+    '''
     fn forward(&self, x: &Array2<f64>) -> usize {
         let num_series = x.nrows();
         let mut count_above_threshold = vec![0; num_series];
